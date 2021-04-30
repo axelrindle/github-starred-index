@@ -104,6 +104,13 @@ const app = {
 			await this.loadAll();
 		},
 
+		goToPage() {
+			const page = parseInt( prompt('Enter a page number:') );
+			if (! page || page < 1 || page > this.pagination.maxPage) {
+				return alert(`Enter a valid number between 1 and ${this.pagination.maxPage}!`);
+			}
+			this.loadRepos(page);
+		},
 		getLicense(repo) {
 			if (! repo.license) {
 				return 'None';

@@ -63,7 +63,8 @@
 					</p>
 					<p class="control is-flex-grow-1">
 						<button class="button is-primary is-outlined is-fullwidth"
-								:title="`You're viewing page ${pagination.page} :D`">
+								title="Click to go to another page"
+								@click="goToPage">
 							<span>Page {{ pagination.page }} / {{ pagination.maxPage }}</span>
 						</button>
 					</p>
