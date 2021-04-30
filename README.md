@@ -10,3 +10,4 @@
 
 - Github Logo &copy; GitHub, Inc.
 - [Star Icon](https://www.iconfinder.com/icons/1679614/bright_christmas_decorate_decoration_favourite_light_star_icon) by [roundicons.com](https://roundicons.com/)
+- Illustrations (see `static/css/img`) by [unDraw](https://undraw.co/)

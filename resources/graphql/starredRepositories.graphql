@@ -1,0 +1,35 @@
+query($first: Int = 50, $after: String = null) {
+  viewer {
+	starredRepositories(first: $first, after: $after) {
+	  pageInfo {
+		startCursor
+		endCursor
+		hasNextPage
+	  }
+	  nodes {
+		id
+		name
+		description
+		owner {
+		  login
+		  url
+		}
+		url
+		openGraphImageUrl
+		primaryLanguage {
+		  color
+		  name
+		}
+		licenseInfo {
+		  name
+		  url
+		}
+		isArchived
+		isFork
+		isMirror
+		isPrivate
+		isTemplate
+	  }
+	}
+  }
+}

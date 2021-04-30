@@ -1,0 +1,291 @@
+<% it.css = [
+	it.url('css/vue-multiselect.css')
+]; %>
+
+<% layout('./_layout.eta') %>
+
+<% /* TODO: Replace title="" with popper.js */ %>
+
+<section class="section main" style="flex: 1 0 auto;" id="app">
+	<div class="container">
+		<h1 class="title">Starred Repositories</h1>
+		<h2 class="subtitle">
+			View, filter and inspect all of your starred repositories.
+		</h2>
+
+		<% /* TODO: <multiselect v-model="form.filter.language" :options="properties.languages"></multiselect> */ %>
+
+		<% /* Main Content */ %>
+		<div class="columns is-desktop">
+
+			<% /* Pagination, filters, etc. */ %>
+			<div class="column is-4-desktop">
+
+				<p class="subtitle">Data</p>
+
+				<div class="field is-grouped">
+					<p class="control">
+						<button class="button is-success is-outlined" title="Update the list with the current settings."
+							:disabled="loading"
+							@click="loadRepos()">
+							<span class="icon">
+								<i class="fas fa-sync-alt"></i>
+							</span>
+							<span>Update</span>
+						</button>
+					</p>
+					<p class="control">
+						<button class="button is-warning is-outlined" title="Reset all filters and reload the list."
+							:disabled="loading"
+							@click="reset()">
+							<span class="icon">
+								<i class="fas fa-undo-alt"></i>
+							</span>
+							<span>Reset</span>
+						</button>
+					</p>
+					<p class="control is-flex-grow-1">
+						<button class="button is-fullwidth" title="This is the total amount of repositories you've starred.">
+							Total: {{ total }}
+						</button>
+					</p>
+				</div> <% /* end .field */ %>
+
+				<div class="field is-grouped">
+					<p class="control">
+						<button class="button" title="Previous page"
+							:disabled="! pagination.hasPrev || loading"
+							@click="loadRepos(pagination.page - 1)">
+							<span class="icon">
+								<i class="fas fa-arrow-left"></i>
+							</span>
+						</button>
+					</p>
+					<p class="control is-flex-grow-1">
+						<button class="button is-primary is-outlined is-fullwidth"
+								:title="`You're viewing page ${pagination.page} :D`">
+							<span>Page {{ pagination.page }} / {{ pagination.maxPage }}</span>
+						</button>
+					</p>
+					<p class="control">
+						<button class="button" title="Previous page"
+								:disabled="! pagination.hasNext || loading"
+								@click="loadRepos(pagination.page + 1)">
+							<span class="icon">
+								<i class="fas fa-arrow-right"></i>
+							</span>
+						</button>
+					</p>
+				</div>
+
+				<% /* Loading spinner */ %>
+				<p class="has-text-centered">
+					<span class="icon is-medium" v-if="loading">
+						<i class="fas fa-circle-notch fa-spin fa-lg"></i>
+					</span>
+				</p>
+
+				<hr>
+
+				<p class="subtitle">Filters</p>
+
+				<div class="field">
+					<label class="label">Repository name</label>
+					<div class="control has-icons-left">
+						<input class="input" type="text"
+								v-model="form.filter.name"
+								@keyup.enter="loadRepos()">
+						<span class="icon is-left">
+							<i class="fas fa-align-left"></i>
+						</span>
+					</div>
+					<p class="help">
+						The repository name will be matched against all repository names containing the given input.
+					</p>
+				</div>
+
+				<div class="field">
+					<label class="label">Programming language</label>
+					<div class="control has-icons-left">
+						<div class="select is-fullwidth">
+							<select v-model="form.filter.language">
+								<option v-for="lang in properties.languages"
+										:value="lang"
+										:key="lang"
+										:selected="lang === null">
+									{{ lang || 'All' }}
+								</option>
+							</select>
+						</div>
+						<span class="icon is-left">
+							<i class="fas fa-code"></i>
+						</span>
+					</div>
+					<p class="help">
+						Select all the programming languages that should appear in the list.
+					</p>
+				</div>
+
+				<div class="field">
+					<label class="label">Flags</label>
+					<div class="control has-icons-left">
+						<div class="field">
+							<input type="checkbox" class="switch is-rounded"
+									id="form.filter.flags.isArchived"
+									v-model="form.filter['flags.isArchived']">
+							<label for="form.filter.flags.isArchived">Archived</label>
+						</div>
+						<div class="field">
+							<input type="checkbox" class="switch is-rounded"
+									id="form.filter.flags.isFork"
+									v-model="form.filter['flags.isFork']">
+							<label for="form.filter.flags.isFork">Forked</label>
+						</div>
+						<div class="field">
+							<input type="checkbox" class="switch is-rounded"
+									id="form.filter.flags.isMirror"
+									v-model="form.filter['flags.isMirror']">
+							<label for="form.filter.flags.isMirror">Mirrored</label>
+						</div>
+						<div class="field">
+							<input type="checkbox" class="switch is-rounded"
+									id="form.filter.flags.isPrivate"
+									v-model="form.filter['flags.isPrivate']">
+							<label for="form.filter.flags.isPrivate">Private</label>
+						</div>
+						<div class="field">
+							<input type="checkbox" class="switch is-rounded"
+									id="form.filter.flags.isTemplate"
+									v-model="form.filter['flags.isTemplate']">
+							<label for="form.filter.flags.isTemplate">Template</label>
+						</div>
+					</div>
+					<p class="help">
+						Flags determine special repository states. Please note that these filters are only applied
+						when enabled. Means a flag set to <b>off</b> won't exclude repositories which are not affected.
+					</p>
+				</div>
+
+			</div> <% /* end .column */ %>
+
+			<% /* Entries table */ %>
+			<div class="column">
+
+				<p class="subtitle">Results</p>
+
+				<div class="result-list" v-if="hasData">
+					<div class="card" v-for="repo in repos" :key="repo.identifier">
+						<div class="card-content">
+
+							<% /* Heading */ %>
+							<div class="columns">
+								<div class="column">
+									<div class="media">
+										<div class="media-left">
+											<figure class="image is-48x48">
+												<img :src="repo.openGraphImageUrl" style="border-radius: 6px;">
+											</figure>
+										</div>
+										<div class="media-content">
+											<p class="title is-4">
+												<a :href="repo.url">
+													{{ repo.identifier }}
+												</a>
+											</p>
+											<p class="subtitle is-6">
+												<a :href="repo.owner.url">
+													@{{ repo.owner.login }}
+												</a>
+											</p>
+										</div>
+									</div>
+								</div>
+								<div class="column is-narrow is-flex is-flex-direction-row is-align-items-center">
+									<div style="width: 12px; height: 12px; border-radius: 100px;"
+										:style="{ 'background-color': repo.primaryLanguage.color || '#333333' }">
+									</div>
+									<span class="ml-2">{{ repo.primaryLanguage.name || 'Unknown' }}</span>
+								</div>
+							</div>
+
+							<% /* Flags */ %>
+							<div class="field is-grouped is-grouped-multiline">
+								<div class="control" v-if="repo.flags.isArchived">
+									<div class="tags has-addons">
+										<span class="tag is-warning">
+											Archived
+										</span>
+										<span class="tag is-dark">
+											<i class="fas fa-archive"></i>
+										</span>
+									</div>
+								</div>
+								<div class="control" v-if="repo.flags.isFork">
+									<div class="tags has-addons">
+										<span class="tag is-link">
+											Fork
+										</span>
+										<span class="tag is-dark">
+											<i class="fas fa-code-branch"></i>
+										</span>
+									</div>
+								</div>
+								<div class="control" v-if="repo.flags.isMirror">
+									<div class="tags has-addons">
+										<span class="tag is-info">
+											Mirror
+										</span>
+										<span class="tag is-dark">
+											<i class="fas fa-clone"></i>
+										</span>
+									</div>
+								</div>
+								<div class="control" v-if="repo.flags.isPrivate">
+									<div class="tags has-addons">
+										<span class="tag is-danger">
+											Private
+										</span>
+										<span class="tag is-dark">
+											<i class="fas fa-lock"></i>
+										</span>
+									</div>
+								</div>
+								<div class="control" v-if="repo.flags.isTemplate">
+									<div class="tags has-addons">
+										<span class="tag is-success">
+											Template
+										</span>
+										<span class="tag is-dark">
+											<i class="fas fa-book"></i>
+										</span>
+									</div>
+								</div>
+							</div>
+
+							<div class="content">
+								{{ repo.description }}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="is-flex is-flex-direction-column is-align-items-center" v-else>
+					<figure class="image" style="width: 56.666666%; margin-bottom: 64px;">
+						<img src="<%~ it.url('img/undraw_empty_xct9.svg') %>">
+					</figure>
+					<p class="title px-5 has-text-centered">
+						Whoa... That did not produce any results 🤔
+					</p>
+				</div>
+
+				<% /*
+					<tr v-for="repo in repos" :key="repo.identifier">
+						<td>{{ repo.primaryLanguage?.name ?? 'Unknown' }}</td>
+						<td v-html="getLicense(repo)"></td>
+					</tr>
+				*/ %>
+			</div> <% /* end .column */ %>
+
+		</div> <% /* end .columns */ %>
+
+	</div> <% /* end .container */ %>
+</section>

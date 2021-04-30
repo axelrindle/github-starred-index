@@ -1,0 +1,75 @@
+<nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <span class="navbar-item" href="https://bulma.io">
+                <img src="<%~ it.url('favicon.png') %>">
+            </span>
+
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbar" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="<%~ it.url() %>">
+                    <span class="icon">
+						<i class="fas fa-home"></i>
+					</span>
+					<span>Home</span>
+                </a>
+
+				<a class="navbar-item" href="<%~ it.url('agendash') %>">
+                    <span class="icon">
+						<i class="fas fa-clock"></i>
+					</span>
+					<span>Scheduler</span>
+                </a>
+
+                <a class="navbar-item" href="<%~ it.url('about') %>">
+                    <span class="icon">
+						<i class="fas fa-info-circle"></i>
+					</span>
+					<span>About</span>
+                </a>
+
+                <a class="navbar-item" href="https://github.com/axelrindle/github-starred-index">
+					<span class="icon">
+						<i class="fas fa-code-branch"></i>
+					</span>
+                    <span>Source Code</span>
+                </a>
+            </div>
+
+            <div class="navbar-end">
+				<% /* <div class="navbar-item">
+					<div class="field">
+						<input id="tglScheme" type="checkbox" class="switch is-warning">
+						<label for="tglScheme">Dark mode</label>
+					</div>
+				</div> */ %>
+                <div class="navbar-item">
+                    <p>
+						Welcome,
+						<b><u>
+							<a class="has-text-white"
+								href="<%= it.user.url %>">
+								<%= it.user.login %>
+							</a>
+						</u></b>
+					</p>
+                </div>
+				<div class="navbar-brand">
+					<div class="navbar-item">
+						<figure class="image">
+							<img class="is-rounded" src="<%= it.user.avatarUrl %>">
+						</figure>
+					</div>
+				</div>
+            </div>
+        </div> <% /* end .navbar-menu */ %>
+
+    </div> <% /* end .container */ %>
+</nav> <% /* end .navbar */ %>
