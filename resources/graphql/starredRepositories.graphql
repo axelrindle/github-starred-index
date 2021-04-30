@@ -1,6 +1,6 @@
 query($first: Int = 50, $after: String = null) {
   viewer {
-	starredRepositories(first: $first, after: $after) {
+	starredRepositories(first: $first, after: $after, orderBy: { field: STARRED_AT, direction: DESC }) {
 	  pageInfo {
 		startCursor
 		endCursor
