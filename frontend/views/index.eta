@@ -214,6 +214,9 @@
 						</span>
 					</p>
 				</div>
+				<p class="help">
+					When sorting is disabled, the natural database order is descending by the <u>starred at</u> time.
+				</p>
 
 			</div> <% /* end .column */ %>
 
