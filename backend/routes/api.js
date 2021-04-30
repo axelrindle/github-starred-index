@@ -123,10 +123,26 @@ module.exports = app => {
 				page = maxPage;
 			}
 
-			const result = await Repository.find(filter, null, {
-				limit: perPage,
-				skip: (page - 1) * perPage
-			}).sort('name');
+			/**
+			 * @returns {Promise<Array<Repository>>}
+			 */
+			async function computeResult() {
+				/** @type {import('mongoose').QueryWithHelpers<Array<Repository>, Repository>} */
+				const query = Repository.find(filter, null, {
+					limit: perPage,
+					skip: (page - 1) * perPage
+				});
+				if (req.body.sort?.enabled ?? false) {
+					const sorter = {
+						[req.body.sort.field]: req.body.sort.order
+					};
+					myLogger.debug('Sorting by:', sorter);
+					query.sort(sorter);
+				}
+				return await query;
+			}
+
+			const result = await computeResult();
 			res.json({
 				isUpdating: await scheduler.isRunning('updateIndex'), // FIXME: not working
 				pagination: {

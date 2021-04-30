@@ -55,7 +55,8 @@ function initialData() {
 			perPage: 10,
 			filter: {
 				language: null
-			}
+			},
+			sort: {}
 		}
 	};
 }
