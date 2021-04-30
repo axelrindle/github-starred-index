@@ -70,6 +70,14 @@ const app = {
 			return !! this.repos && this.repos.length > 0;
 		}
 	},
+	watch: {
+		form: {
+			handler: newValue => {
+				localStorage.setItem('form', JSON.stringify(newValue));
+			},
+			deep: true
+		}
+	},
 
 	methods: {
 		async loadProperties() {
@@ -110,6 +118,16 @@ const app = {
 	},
 
 	mounted() {
+		// load form settings
+		try {
+			const formSettings = localStorage.getItem('form');
+			if (!! formSettings) {
+				this.form = JSON.parse(formSettings);
+			}
+		} catch (error) {
+			console.error('Form settings parsing failed!', error);
+		}
+
 		this.loadAll()
 			.then(fadeOut('.loading-overlay', 10));
 	}
