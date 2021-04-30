@@ -42,7 +42,7 @@ class Scheduler {
     }
 
     async _loadJobs() {
-        this._registerJob('updateIndex', '0 * * * *');
+        this._registerJob('updateIndex', '0 * * * *', true);
 		this._registerJob('cleanAgendaJobs', '0 0 1 */1 *');
     }
 
