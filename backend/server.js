@@ -94,8 +94,8 @@ module.exports = async (container) => {
 
     app.use('/agendash', agendash( container.resolve('scheduler').getAgenda() ));
 
-	const host = process.env.APP_HOST || '127.0.0.1';
-    const port = parseInt(process.env.APP_PORT) || 8080;
+	const host = process.env.APP_HOST;
+    const port = parseInt(process.env.APP_PORT);
 	const server = await createServer(app);
     server.listen(port, host, () => {
         myLogger.info(`Server listening on ${host}:${port}`);

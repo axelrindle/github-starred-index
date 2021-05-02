@@ -3,20 +3,27 @@ const dotenv = require('dotenv');
 const dotenvExpand = require('dotenv-expand');
 const { Logger } = require('./logger');
 const fail = require('./util/fail');
+const envUtil = require('./util/env');
 
 // Load environment
-const env = dotenv.config();
-dotenvExpand(env);
+try {
+	const env = dotenv.config();
+
+	// put defaults
+	envUtil.setDefault('APP_HOST', '127.0.0.1');
+	envUtil.setDefault('APP_PORT', 8080);
+
+	dotenvExpand(env);
+} catch (error) {
+	fail(error);
+}
 
 // Startup checks
 if (! [ 'production', 'debug' ].includes( process.env.NODE_ENV )) {
     fail(`Invalid environment "${process.env.NODE_ENV}"! NODE_ENV must be either "production" or "debug".`);
 }
-[ 'APP_KEY', 'GITHUB_API_TOKEN' ].forEach(envVar => {
-    if (! process.env[envVar]) {
-        fail(envVar + ' env variable not found!');
-    }
-});
+envUtil.require([ 'APP_KEY', 'APP_URL' ]);
+envUtil.require([ 'GITHUB_API_TOKEN' ]);
 
 const logger = new Logger('main');
 
