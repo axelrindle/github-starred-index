@@ -1,4 +1,6 @@
 import $ from "cash-dom";
+import dayjs from "dayjs";
+
 // import Multiselect from '@vueform/multiselect'
 
 // Init
@@ -121,6 +123,9 @@ const app = {
 			else {
 				return `<a href="${repo.license.url}">${repo.license.name}</a>`;
 			}
+		},
+		formatStarredAt(dateString) {
+			return dayjs(dateString).format('DD.MM.YYYY');
 		}
 	},
 
