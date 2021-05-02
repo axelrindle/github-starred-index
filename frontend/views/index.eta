@@ -191,6 +191,7 @@
 					<p class="control is-expanded">
 						<span class="select is-fullwidth">
 							<select v-model="form.sort.field">
+								<option value="starredAt">Starred At</option>
 								<option value="name">Name</option>
 								<option value="owner.login">Owner</option>
 							</select>
@@ -216,7 +217,7 @@
 					</p>
 				</div>
 				<p class="help">
-					When sorting is disabled, the natural database order is descending by the <u>starred at</u> time.
+					When sorting is disabled, the default order is by <i>Starred At</i> in <i>descending</i> order.
 				</p>
 
 			</div> <% /* end .column */ %>

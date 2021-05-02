@@ -6,6 +6,7 @@ const { Model } = require('mongoose');
 function mapNodeToRepository(node) {
     return {
 		identifier: `${node.owner.login}/${node.name}`,
+		starredAt: node.starredAt,
         name: node.name,
         description: node.description,
 		owner: node.owner,
@@ -71,8 +72,9 @@ module.exports = async ({ createLogger, graphql, mongo }) => {
             const queryResult = await graphql('starredRepositories', {
                 after: lastEndCursor
             });
-            const { pageInfo, nodes } = queryResult.viewer.starredRepositories;
+            const { pageInfo, edges } = queryResult.viewer.starredRepositories;
 
+			const nodes = edges.map(edge => ({ starredAt: edge.starredAt, ...edge.node }));
 			const nodesMapped = nodes.map(mapNodeToRepository);
             nameList.push( ...nodesMapped.map(el => el.identifier) );
             toSave.push( upsertMany(Repository, nodesMapped) );

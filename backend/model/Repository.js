@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 
 const Repository = new Schema({
 	identifier: { type: String, index: true },
+	starredAt: Date,
     name: { type: String, index: true },
 	description: String,
 	owner: {

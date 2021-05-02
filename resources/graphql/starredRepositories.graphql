@@ -1,35 +1,42 @@
 query($first: Int = 50, $after: String = null) {
-  viewer {
-	starredRepositories(first: $first, after: $after, orderBy: { field: STARRED_AT, direction: DESC }) {
-	  pageInfo {
-		startCursor
-		endCursor
-		hasNextPage
-	  }
-	  nodes {
-		id
-		name
-		description
-		owner {
-		  login
-		  url
+	viewer {
+		starredRepositories(
+			first: $first
+			after: $after
+			orderBy: { field: STARRED_AT, direction: DESC }
+		) {
+			pageInfo {
+				startCursor
+				endCursor
+				hasNextPage
+			}
+			edges {
+				starredAt
+				node {
+					id
+					name
+					description
+					owner {
+						login
+						url
+					}
+					url
+					openGraphImageUrl
+					primaryLanguage {
+						color
+						name
+					}
+					licenseInfo {
+						name
+						url
+					}
+					isArchived
+					isFork
+					isMirror
+					isPrivate
+					isTemplate
+				}
+			}
 		}
-		url
-		openGraphImageUrl
-		primaryLanguage {
-		  color
-		  name
-		}
-		licenseInfo {
-		  name
-		  url
-		}
-		isArchived
-		isFork
-		isMirror
-		isPrivate
-		isTemplate
-	  }
 	}
-  }
 }
