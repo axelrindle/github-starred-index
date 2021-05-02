@@ -4,7 +4,6 @@ const { Model } = require('mongoose');
 const { Logger } = require('../logger');
 const Mongo = require('../service/mongo');
 const Scheduler = require('../service/scheduler');
-const isEmptyObject = require('../util/isEmptyObject');
 
 /**
  * @param {express.Response} res
