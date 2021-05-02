@@ -42,7 +42,7 @@ class Scheduler {
     }
 
     async _loadJobs() {
-        this._registerJob('updateIndex', '0 * * * *', true);
+        this._registerJob('updateIndex', process.env.SCHEDULER_UPDATE_INDEX_INTERVAL, true);
 		this._registerJob('cleanAgendaJobs', '0 0 1 */1 *');
     }
 
