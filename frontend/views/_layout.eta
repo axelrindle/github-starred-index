@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<%~ it.locale %>">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -56,6 +56,15 @@
 		<script src="https://unpkg.com/vue@next"></script>
 		<script src="https://unpkg.com/vuejs-paginate@2.1.0"></script>
 		<script src="<%~ it.url('js/bulma-burger.js') %>"></script>
-		<script src="<%~ it.url('js/app.js') %>"></script>
+		<% if (it.jsModules) { %>
+			<% for(let jsUrl of it.jsModules) { %>
+				<script src="<%~ jsUrl %>" type="module"></script>
+			<% } %>
+		<% } %>
+		<% if (it.js) { %>
+			<% for(let jsUrl of it.js) { %>
+				<script src="<%~ jsUrl %>"></script>
+			<% } %>
+		<% } %>
     </body>
 </html>

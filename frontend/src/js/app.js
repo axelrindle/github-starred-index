@@ -1,10 +1,24 @@
 import $ from "cash-dom";
 import dayjs from "dayjs";
+import localizedFormat from "dayjs/plugin/localizedFormat";
 
 // import Multiselect from '@vueform/multiselect'
 
 // Init
+const locale = $('html').attr('lang');
 const baseUrl = $('base').attr('href');
+
+async function init() {
+	const localeUrl = new URL(`dayjs/locale/${locale}.js`, baseUrl).toString()
+
+	dayjs.locale(locale);
+	dayjs.extend(localizedFormat);
+	try {
+		dayjs.extend(await import(localeUrl));
+	} catch (error) {
+		console.error('Locale loading failed!', error);
+	}
+}
 
 /**
  * Makes an API call to the backend.
@@ -125,11 +139,13 @@ const app = {
 			}
 		},
 		formatStarredAt(dateString) {
-			return dayjs(dateString).format('DD.MM.YYYY');
+			return dayjs(dateString).format('L');
 		}
 	},
 
-	mounted() {
+	async mounted() {
+		await init();
+
 		// load form settings
 		try {
 			const formSettings = localStorage.getItem('form');
@@ -140,8 +156,8 @@ const app = {
 			console.error('Form settings parsing failed!', error);
 		}
 
-		this.loadAll()
-			.then(fadeOut('.loading-overlay', 10));
+		await this.loadAll();
+		fadeOut('.loading-overlay', 10);
 	}
 };
 

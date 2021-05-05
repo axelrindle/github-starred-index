@@ -10,6 +10,7 @@ try {
 	const env = dotenv.config();
 
 	// put defaults
+	envUtil.setDefault('APP_LOCALE', 'en');
 	envUtil.setDefault('APP_HOST', '127.0.0.1');
 	envUtil.setDefault('APP_PORT', 8080);
 	envUtil.setDefault('SCHEDULER_UPDATE_INDEX_INTERVAL', '0 * * * *');

@@ -68,12 +68,14 @@ module.exports = async (container) => {
     }
     app.use(favicon(path.resolve('frontend/static/favicon.png')));
     app.use(express.static('frontend/static'));
+    app.use('/dayjs', express.static('node_modules/dayjs/'));
 
     app.use((req, res, next) => {
         res.locals = {
             url: (_path = '') => {
                 return new URL(_path, process.env.APP_URL).toString();
-            }
+            },
+			locale: process.env.APP_LOCALE
         };
         next();
     });
