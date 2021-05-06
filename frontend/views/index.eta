@@ -28,7 +28,7 @@
 
 				<div class="field is-grouped">
 					<p class="control">
-						<button class="button is-success is-outlined" title="Update the list with the current settings."
+						<button class="button is-success" title="Update the list with the current settings."
 							:disabled="loading"
 							@click="loadRepos()">
 							<span class="icon">
@@ -38,7 +38,7 @@
 						</button>
 					</p>
 					<p class="control">
-						<button class="button is-warning is-outlined" title="Reset all filters and reload the list."
+						<button class="button is-warning" title="Reset all filters and reload the list."
 							:disabled="loading"
 							@click="reset()">
 							<span class="icon">
