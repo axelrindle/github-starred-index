@@ -42,11 +42,11 @@ jobs:
         push: true
         tags: axelrindle/github-starred-index:latest
         platforms: linux/amd64,linux/arm64,linux/arm/v7
-    - name: Update repo description
-      uses: peter-evans/dockerhub-description@v2
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-        repository: axelrindle/github-starred-index
+    # - name: Update repo description
+    #   uses: peter-evans/dockerhub-description@v2
+    #   with:
+    #     username: ${{ secrets.DOCKERHUB_USERNAME }}
+    #     password: ${{ secrets.DOCKERHUB_TOKEN }}
+    #     repository: axelrindle/github-starred-index
     - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}
