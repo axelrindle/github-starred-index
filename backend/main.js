@@ -1,15 +1,13 @@
 // Require modules
-const dotenv = require('dotenv');
-const dotenvExpand = require('dotenv-expand');
+const config = require('./config');
 const { Logger } = require('./logger');
 const fail = require('./util/fail');
 
 // Load environment
-const config = require('./config');
 try {
-	const env = dotenv.config();
+	config.load();
 	config.setDefaults();
-	dotenvExpand(env);
+	config.expandEnvironment();
 } catch (error) {
 	fail(error);
 }
