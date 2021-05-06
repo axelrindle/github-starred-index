@@ -225,6 +225,8 @@
 
 			</div> <% /* end .column */ %>
 
+			<hr class="is-hidden-desktop">
+
 			<% /* Entries table */ %>
 			<div class="column">
 
