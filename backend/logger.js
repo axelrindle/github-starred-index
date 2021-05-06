@@ -7,19 +7,22 @@ class Logger {
 
     constructor(tag) {
         this._tag = tag;
-        
-        dayjs.locale(process.env.APP_LOCALE || 'en');
+
+		const locale = process.env.APP_LOCALE;
+		require('dayjs/locale/' + locale);
+        dayjs.locale(locale);
+		dayjs.extend(require('dayjs/plugin/localizedFormat'));
     }
 
     /**
-     * 
-     * @param {import('stream').Writable} stream 
-     * @param {string} level 
-     * @param {string} message 
-     * @param {any} meta 
+     *
+     * @param {import('stream').Writable} stream
+     * @param {string} level
+     * @param {string} message
+     * @param {any} meta
      */
     _log(stream, level, message, meta = null) {
-        const timestamp = dayjs().format('DD.MM.YYYY HH:mm:ss.SSS');
+        const timestamp = dayjs().format('L @ HH:mm:ss.SSS');
         const format = `${chalk.dim('[' + timestamp + ']')} ${chalk.dim('[')}${this._tag}${chalk.dim(']')} ${level} ${chalk.dim('>')}  ${message}`;
 
         stream.write(format);
