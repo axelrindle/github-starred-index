@@ -1,0 +1,23 @@
+services:
+    mongodb:
+        image: mongo:4.4-bionic
+        restart: unless-stopped
+        volumes:
+            - mongodb:/data/db
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: gsi
+            MONGO_INITDB_DATABASE: github-starred-index
+
+    github-starred-index:
+        # build: .
+        image: axelrindle/github-starred-index:latest
+        # restart: unless-stopped
+        env_file: docker.env
+        ports:
+            - 8085:8080
+        depends_on:
+            - mongodb
+
+volumes:
+    mongodb: {}
