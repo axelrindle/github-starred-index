@@ -11,7 +11,7 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
-	- name: Checkout
+    - name: Checkout
       uses: actions/checkout@v2
     - name: Setup Node.js environment
       uses: actions/setup-node@v2.1.5
@@ -34,7 +34,7 @@ jobs:
       id: docker_build
       uses: docker/build-push-action@v2
       with:
-	  	context: .
+        context: .
         push: true
         tags: axelrindle/github-starred-index:latest
         platforms: linux/amd64,linux/arm64,linux/arm/v7
