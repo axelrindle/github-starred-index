@@ -1,3 +1,6 @@
+[![CI](https://github.com/axelrindle/github-starred-index/actions/workflows/ci.yml/badge.svg)](https://github.com/axelrindle/github-starred-index/actions/workflows/ci.yml)
+![Docker Image Version (latest semver)](https://img.shields.io/docker/v/axelrindle/github-starred-index?logo=docker)
+
 # github-starred-index
 
 > :stars: A simple webservice that indexes your starred GitHub repositories.
@@ -14,8 +17,11 @@
 
 - [Async functions](https://caniuse.com/async-functions)
 - [Nullish Coalescing Operator](https://caniuse.com/mdn-javascript_operators_nullish_coalescing)
+- [Dynamic imports](https://caniuse.com/es6-module-dynamic-import)
 
 ## Installation
+
+### Manual
 
 1. Clone the repository
 
@@ -37,6 +43,10 @@ npm run compile:js
 ```shell
 node backend/main.js
 ```
+
+### Docker Compose
+
+Use the existing [docker-compose.yml](docker-compose.yml) as a template.
 
 ## Configuration
 
