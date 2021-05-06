@@ -3,29 +3,17 @@ const dotenv = require('dotenv');
 const dotenvExpand = require('dotenv-expand');
 const { Logger } = require('./logger');
 const fail = require('./util/fail');
-const envUtil = require('./util/env');
 
 // Load environment
+const config = require('./config');
 try {
 	const env = dotenv.config();
-
-	// put defaults
-	envUtil.setDefault('APP_LOCALE', 'en');
-	envUtil.setDefault('APP_HOST', '127.0.0.1');
-	envUtil.setDefault('APP_PORT', 8080);
-	envUtil.setDefault('SCHEDULER_UPDATE_INDEX_INTERVAL', '0 * * * *');
-
+	config.setDefaults();
 	dotenvExpand(env);
 } catch (error) {
 	fail(error);
 }
-
-// Startup checks
-if (! [ 'production', 'debug' ].includes( process.env.NODE_ENV )) {
-    fail(`Invalid environment "${process.env.NODE_ENV}"! NODE_ENV must be either "production" or "debug".`);
-}
-envUtil.require([ 'APP_KEY', 'APP_URL' ]);
-envUtil.require([ 'GITHUB_API_TOKEN' ]);
+config.checkRequired();
 
 const logger = new Logger('main');
 
