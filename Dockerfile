@@ -6,9 +6,7 @@ COPY . .
 
 RUN npm config set update-notifier false
 RUN npm i -g npm@^7
-RUN npm install
-RUN npm run compile:css
-RUN npm run compile:js
+RUN npm install --only=production
 
 RUN adduser -S -D -H -h /app -s /sbin/nologin gsi
 USER gsi
