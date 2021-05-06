@@ -56,14 +56,13 @@
 		<script src="https://unpkg.com/vue@next"></script>
 		<script src="https://unpkg.com/vuejs-paginate@2.1.0"></script>
 		<script src="<%~ it.url('js/bulma-burger.js') %>"></script>
-		<% if (it.jsModules) { %>
-			<% for(let jsUrl of it.jsModules) { %>
-				<script src="<%~ jsUrl %>" type="module"></script>
-			<% } %>
-		<% } %>
 		<% if (it.js) { %>
-			<% for(let jsUrl of it.js) { %>
-				<script src="<%~ jsUrl %>"></script>
+			<% for(let config of it.js) { %>
+				<% if (config.isModule) { %>
+					<script src="<%~ config.path %>" type="module"></script>
+				<% } else { %>
+					<script src="<%~ config.path %>"></script>
+				<% } %>
 			<% } %>
 		<% } %>
     </body>

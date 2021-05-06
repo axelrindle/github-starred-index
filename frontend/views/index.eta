@@ -1,8 +1,8 @@
 <% it.css = [
 	it.url('css/vue-multiselect.css')
 ]; %>
-<% it.jsModules = [
-	it.url('js/app.js')
+<% it.js = [
+	{ isModule: true, path: it.url('js/app.js') }
 ]; %>
 
 <% layout('./_layout.eta') %>
