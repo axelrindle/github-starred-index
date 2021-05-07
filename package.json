@@ -47,6 +47,8 @@
 		"cash-dom": "^8.1.0",
 		"eslint": "^7.25.0",
 		"parcel": "^2.0.0-beta.2",
+		"stylelint": "^13.13.1",
+		"stylelint-config-standard": "^22.0.0",
 		"vue": "^3.0.11"
 	},
 	"engines": {
