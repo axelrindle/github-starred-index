@@ -1,5 +1,6 @@
 [![CI](https://github.com/axelrindle/github-starred-index/actions/workflows/ci.yml/badge.svg)](https://github.com/axelrindle/github-starred-index/actions/workflows/ci.yml)
 ![Docker Image Version (latest semver)](https://img.shields.io/docker/v/axelrindle/github-starred-index?logo=docker)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/a47268802b464d99bea82318d82ab83f)](https://www.codacy.com/gh/axelrindle/github-starred-index/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=axelrindle/github-starred-index&amp;utm_campaign=Badge_Grade)
 
 # github-starred-index
 

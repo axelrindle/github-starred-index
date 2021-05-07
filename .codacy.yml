@@ -1,0 +1,7 @@
+---
+exclude_paths:
+  - ".github/**"
+  - ".vscode/**"
+  - "node_modules/**"
+  - "test/**"
+  - "wiki/**"
