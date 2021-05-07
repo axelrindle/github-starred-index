@@ -35,11 +35,12 @@ jobs:
           axelrindle/github-starred-index
         # generate Docker tags based on the following events/attributes
         tags: |
-          type=ref,event=tag
           type=ref,event=pr
           type=semver,pattern={{version}}
           type=semver,pattern={{major}}.{{minor}}
           type=semver,pattern={{major}}
+        flavor: |
+          latest=true
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1
