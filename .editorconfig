@@ -11,3 +11,6 @@ trim_trailing_whitespace = true
 
 [docker-compose.yml]
 indent_style = space
+
+[.github/*.yml]
+indent_style = space
