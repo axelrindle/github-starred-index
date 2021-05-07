@@ -3,7 +3,6 @@ const fs = require('fs').promises;
 const http = require('http');
 const https = require('https');
 // const spdy = require('spdy'); FIXME: not working with docker
-const { Logger } = require('../logger');
 
 /**
  * Creates an HTTP server based on the environment settings.
@@ -13,7 +12,7 @@ const { Logger } = require('../logger');
  * @returns {Promise<http.Server|https.Server|spdy.Server>}
  */
 module.exports = async (app) => {
-	/** @type {Logger} */
+	/** @type {import('../logger').Logger} */
 	const logger = app.get('logger');
 	const secure = process.env.APP_URL?.startsWith('https') ?? false;
 

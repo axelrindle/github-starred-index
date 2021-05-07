@@ -20,22 +20,22 @@ logger.debug('Environment dump', process.env);
 
 // Fail on uncaught exceptions or rejections
 process.on('uncaughtExceptionMonitor', (err, _origin) => {
-    logger.error('Uncaught exception detected!');
-    console.error(err);
-    process.exit(1);
+	logger.error('Uncaught exception detected!');
+	console.error(err);
+	process.exit(1);
 });
 process.on('unhandledRejection', err => {
-    logger.error('Unhandled promise rejection detected!');
-    console.error(err);
-    process.exit(1);
+	logger.error('Unhandled promise rejection detected!');
+	console.error(err);
+	process.exit(1);
 });
 
 async function boot() {
-    // Create service container
-    const container = await require('./container')();
+	// Create service container
+	const container = await require('./container')();
 
-    logger.info('Starting server...');
-    require('./server')(container);
+	logger.info('Starting server...');
+	require('./server')(container);
 }
 
 boot().catch(fail);

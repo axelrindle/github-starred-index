@@ -1,12 +1,12 @@
 // Require modules
-const fail = require("./fail");
+const fail = require('./fail');
 
 function check(envVar) {
-	return process.env.hasOwnProperty(envVar);
+	return Object.prototype.hasOwnProperty.call(process.env, envVar);
 }
 
 function onFail(envVar) {
-	fail(envVar + " env variable not found!");
+	fail(envVar + ' env variable not found!');
 }
 
 /**

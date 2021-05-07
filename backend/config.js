@@ -43,7 +43,7 @@ function interpolate(envValue) {
 			const key = parts[2];
 			replacePart = parts[0].substring(prefix.length);
 			// process.env value 'wins' over .env file's value
-			value = process.env.hasOwnProperty(key) ? process.env[key] : '';
+			value = Object.prototype.hasOwnProperty.call(process.env, key) ? process.env[key] : '';
 
 			// Resolve recursive interpolations
 			value = interpolate(value);
