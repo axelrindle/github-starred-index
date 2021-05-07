@@ -10,6 +10,6 @@ if [ "$OLD_KEY" != "APP_KEY=" ]; then
 	fi
 fi
 
-NEW_KEY=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 64 | head -n 1)
+NEW_KEY=$(tr -dc 'a-zA-Z0-9' < /dev/urandom | fold -w 64 | head -n 1)
 sed -i.bak "s/^APP_KEY=.*/APP_KEY=$NEW_KEY/" .env
 echo " >  New key has been set."
