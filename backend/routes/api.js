@@ -1,21 +1,17 @@
 // Require modules
-const express = require("express");
-const { Model } = require("mongoose");
-const { Logger } = require("../logger");
-const Mongo = require("../service/mongo");
-const Scheduler = require("../service/scheduler");
+const express = require('express');
 
 /**
  * @param {express.Response} res
- * @param {Logger} logger
+ * @param {import('../logger').Logger} logger
  * @param {any} error
  */
 const apiErrorHandler = (res, logger, error) => {
 	if (!error) {
-		res.status(500).send({ error: "An error occured!" });
+		res.status(500).send({ error: 'An error occured!' });
 		return;
 	}
-	logger.error(error?.message ?? "An error occured!", error);
+	logger.error(error?.message ?? 'An error occured!', error);
 	if (error.status) {
 		res.status(error.status).send({ error: error.message });
 	} else {
@@ -38,23 +34,23 @@ const mapUserFilter = (userFilter) => {
 		}
 
 		const userProp = userFilter[userFilterProp];
-		if (!!userProp) {
+		if (userProp) {
 			if (exact) {
 				filter[modelProp] = userProp;
 			} else {
-				filter[modelProp] = { $regex: userProp, $options: "i" };
+				filter[modelProp] = { $regex: userProp, $options: 'i' };
 			}
 		}
 	};
 
-	check("name", null, false);
-	check("flags.isArchived");
-	check("flags.isFork");
-	check("flags.isMirror");
-	check("flags.isPrivate");
-	check("flags.isTemplate");
-	check("language", "primaryLanguage.name");
-	check("license", "license.name");
+	check('name', null, false);
+	check('flags.isArchived');
+	check('flags.isFork');
+	check('flags.isMirror');
+	check('flags.isPrivate');
+	check('flags.isTemplate');
+	check('language', 'primaryLanguage.name');
+	check('license', 'license.name');
 
 	return filter;
 };
@@ -64,52 +60,52 @@ const mapUserFilter = (userFilter) => {
  */
 module.exports = (app) => {
 	/** @type {import('awilix').AwilixContainer} */
-	const container = app.get("container");
+	const container = app.get('container');
 
-	/** @type {Logger} */
-	const myLogger = container.resolve("createLogger")("ApiController");
+	/** @type {import('../logger').Logger} */
+	const myLogger = container.resolve('createLogger')('ApiController');
 
 	/** @type {(file: string, variables: object?) => Promise<import('@octokit/graphql/dist-types/types').GraphQlResponse<any>>} */
-	const graphql = container.resolve("graphql");
+	const graphql = container.resolve('graphql');
 
-	/** @type {Scheduler} */
-	const scheduler = container.resolve("scheduler");
+	/** @type {import('../service/scheduler')} */
+	const scheduler = container.resolve('scheduler');
 
-	/** @type {Mongo} */
-	const mongo = container.resolve("mongo");
+	/** @type {import('../service/mongo')} */
+	const mongo = container.resolve('mongo');
 
-	/** @type {Model} */
-	const Repository = mongo.getModel("Repository");
+	/** @type {import('mongoose').Model} */
+	const Repository = mongo.getModel('Repository');
 
 	const myRouter = express.Router();
 
-	myRouter.post("/whoami", async (_req, res) => {
+	myRouter.post('/whoami', async (_req, res) => {
 		try {
-			const { viewer } = await graphql("user");
+			const { viewer } = await graphql('user');
 			res.json(viewer);
 		} catch (error) {
 			apiErrorHandler(res, myLogger, error);
 		}
 	});
 
-	myRouter.post("/property/language", async (_req, res) => {
-		const result = await Repository.distinct("primaryLanguage.name");
+	myRouter.post('/property/language', async (_req, res) => {
+		const result = await Repository.distinct('primaryLanguage.name');
 		res.json(result);
 	});
 
-	myRouter.post("/property/license", async (req, res) => {
+	myRouter.post('/property/license', async (req, res) => {
 		const filter = {
-			"primaryLanguage.name": req.body.filter?.language,
+			'primaryLanguage.name': req.body.filter?.language,
 		};
 
-		const result = await Repository.distinct("license.name", filter);
+		const result = await Repository.distinct('license.name', filter);
 		res.json(result);
 	});
 
-	myRouter.post("/starred", async (req, res) => {
+	myRouter.post('/starred', async (req, res) => {
 		try {
 			const filter = mapUserFilter(req.body.filter);
-			myLogger.debug("Filtering repositories by:", filter);
+			myLogger.debug('Filtering repositories by:', filter);
 
 			const totalCount = await Repository.countDocuments(filter);
 			const perPage = parseInt(req.body.perPage) || totalCount;
@@ -135,7 +131,7 @@ module.exports = (app) => {
 					const sorter = {
 						[req.body.sort.field]: req.body.sort.order,
 					};
-					myLogger.debug("Sorting by:", sorter);
+					myLogger.debug('Sorting by:', sorter);
 					query.sort(sorter);
 				}
 				return await query;
@@ -143,7 +139,7 @@ module.exports = (app) => {
 
 			const result = await computeResult();
 			res.json({
-				isUpdating: await scheduler.isRunning("updateIndex"), // FIXME: not working
+				isUpdating: await scheduler.isRunning('updateIndex'), // FIXME: not working
 				pagination: {
 					perPage,
 					page,
@@ -155,11 +151,11 @@ module.exports = (app) => {
 				data: result,
 			});
 		} catch (error) {
-			const msg = error?.message ?? "An error occured!";
+			const msg = error?.message ?? 'An error occured!';
 			myLogger.error(msg, error);
 			res.status(500).json({ error: msg });
 		}
 	});
 
-	app.use("/api", myRouter);
+	app.use('/api', myRouter);
 };
