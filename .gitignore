@@ -140,3 +140,6 @@ temp/
 
 frontend/static/css
 frontend/static/js
+
+.env.bak
+docker.env
