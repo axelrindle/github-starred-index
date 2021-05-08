@@ -1,6 +1,8 @@
 import $ from "cash-dom";
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
+import VueTippy from 'vue-tippy';
+import tooltipOptions from './tooltips';
 
 // import Multiselect from '@vueform/multiselect'
 
@@ -163,5 +165,8 @@ const app = {
 
 // @ts-ignore
 Vue.createApp(app)
+	.use(VueTippy, {
+		defaultProps: tooltipOptions
+	})
 	// .component('multiselect', Multiselect)
 	.mount('#app');

@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css" integrity="sha256-O8SsQwDg1R10WnKJNyYgd9J3rlom+YSVcGbEF5RmfFk=" crossorigin="anonymous">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
         <link href="<%~ it.url('css/app.css') %>" rel="stylesheet">
+        <link href="<%~ it.url('css/tooltips.css') %>" rel="stylesheet">
 		<% if (it.css) { %>
 			<% for(let cssUrl of it.css) { %>
 				<link href="<%~ cssUrl %>" rel="stylesheet">
@@ -56,6 +57,7 @@
 		<script src="https://unpkg.com/vue@next"></script>
 		<script src="https://unpkg.com/vuejs-paginate@2.1.0"></script>
 		<script src="<%~ it.url('js/bulma-burger.js') %>"></script>
+		<script src="<%~ it.url('js/tooltips.js') %>"></script>
 		<% if (it.js) { %>
 			<% for(let config of it.js) { %>
 				<% if (config.isModule) { %>

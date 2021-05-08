@@ -7,8 +7,6 @@
 
 <% layout('./_layout.eta') %>
 
-<% /* TODO: Replace title="" with popper.js */ %>
-
 <section class="section main" style="flex: 1 0 auto;" id="app">
 	<div class="container">
 		<h1 class="title">Starred Repositories</h1>
@@ -28,9 +26,10 @@
 
 				<div class="field is-grouped">
 					<p class="control">
-						<button class="button is-success" title="Update the list with the current settings."
+						<button class="button is-success" content="Update the list with the current settings."
 							:disabled="loading"
-							@click="loadRepos()">
+							@click="loadRepos()"
+							v-tippy>
 							<span class="icon">
 								<i class="fas fa-sync-alt"></i>
 							</span>
@@ -38,9 +37,10 @@
 						</button>
 					</p>
 					<p class="control">
-						<button class="button is-warning" title="Reset all filters and reload the list."
+						<button class="button is-warning" content="Reset all filters and reload the list."
 							:disabled="loading"
-							@click="reset()">
+							@click="reset()"
+							v-tippy>
 							<span class="icon">
 								<i class="fas fa-undo-alt"></i>
 							</span>
@@ -48,7 +48,9 @@
 						</button>
 					</p>
 					<p class="control is-flex-grow-1">
-						<button class="button is-fullwidth" title="This is the total amount of repositories you've starred.">
+						<button class="button is-fullwidth"
+								content="This is the total amount of repositories you've starred."
+								v-tippy>
 							Total: {{ total }}
 						</button>
 					</p>
@@ -56,9 +58,10 @@
 
 				<div class="field is-grouped">
 					<p class="control">
-						<button class="button" title="Previous page"
+						<button class="button" content="Previous page"
 							:disabled="! pagination.hasPrev || loading"
-							@click="loadRepos(pagination.page - 1)">
+							@click="loadRepos(pagination.page - 1)"
+							v-tippy>
 							<span class="icon">
 								<i class="fas fa-arrow-left"></i>
 							</span>
@@ -66,15 +69,17 @@
 					</p>
 					<p class="control is-flex-grow-1">
 						<button class="button is-primary is-outlined is-fullwidth"
-								title="Click to go to another page"
-								@click="goToPage">
+								content="Click to go to another page"
+								@click="goToPage"
+								v-tippy>
 							<span>Page {{ pagination.page }} / {{ pagination.maxPage }}</span>
 						</button>
 					</p>
 					<p class="control">
-						<button class="button" title="Previous page"
+						<button class="button" content="Next page"
 								:disabled="! pagination.hasNext || loading"
-								@click="loadRepos(pagination.page + 1)">
+								@click="loadRepos(pagination.page + 1)"
+								v-tippy>
 							<span class="icon">
 								<i class="fas fa-arrow-right"></i>
 							</span>
@@ -266,7 +271,7 @@
 										</div>
 										<span class="ml-2">{{ repo.primaryLanguage?.name ?? 'Unknown' }}</span>
 									</div>
-									<p title="This is the date you starred this repository at.">
+									<p content="This is the date you starred this repository at." v-tippy>
 										{{ formatStarredAt(repo.starredAt) }}
 									</p>
 								</div>
