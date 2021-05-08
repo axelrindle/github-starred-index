@@ -1,0 +1,17 @@
+<div class="loading-overlay">
+	<section class="hero is-primary is-fullheight">
+		<div class="hero-body">
+			<div class="container is-flex is-flex-direction-column is-align-items-center">
+				<figure class="image is-128x128">
+					<img src="<%~ it.url('favicon.png') %>">
+				</figure>
+				<p class="title is-1 my-6">
+					Loading...
+				</p>
+				<span class="icon is-large">
+					<i class="fas fa-circle-notch fa-spin fa-2x"></i>
+				</span>
+			</div>
+		</div>
+	</section>
+</div>

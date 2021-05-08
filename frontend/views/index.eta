@@ -2,6 +2,8 @@
 	it.url('css/vue-multiselect.css')
 ]; %>
 <% it.js = [
+	{ path: 'https://unpkg.com/vue@next' },
+	{ path: 'https://unpkg.com/vuejs-paginate@2.1.0' },
 	{ isModule: true, path: it.url('js/app.js') }
 ]; %>
 

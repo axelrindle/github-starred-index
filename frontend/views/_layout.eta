@@ -22,40 +22,13 @@
     <body class="is-flex is-flex-direction-column">
         <%~ includeFile('_navbar', it) %>
 
-		<div class="loading-overlay">
-			<section class="hero is-primary is-fullheight">
-				<div class="hero-body">
-					<div class="container is-flex is-flex-direction-column is-align-items-center">
-						<figure class="image is-128x128">
-							<img src="<%~ it.url('favicon.png') %>">
-						</figure>
-						<p class="title is-1 my-6">
-							Loading...
-						</p>
-						<span class="icon is-large">
-							<i class="fas fa-circle-notch fa-spin fa-2x"></i>
-						</span>
-					</div>
-				</div>
-			</section>
-		</div>
+        <%~ includeFile('partials/loading-overlay', it) %>
 
 		<%~ it.body %>
 
-        <footer class="footer">
-            <div class="content has-text-centered">
-                <p>
-					Made with <i class="fas fa-heart has-text-danger mx-1"></i> by <a href="https://github.com/axelrindle">Axel Rindle</a>
-                </p>
-				<p>
-					Illustrations by <a href="https://undraw.co/license">unDraw</a>
-				</p>
-            </div>
-        </footer>
+        <%~ includeFile('partials/footer', it) %>
 
-		<!-- JS files -->
-		<script src="https://unpkg.com/vue@next"></script>
-		<script src="https://unpkg.com/vuejs-paginate@2.1.0"></script>
+		<% /* JS files */ %>
 		<script src="<%~ it.url('js/bulma-burger.js') %>"></script>
 		<script src="<%~ it.url('js/tooltips.js') %>"></script>
 		<% if (it.js) { %>

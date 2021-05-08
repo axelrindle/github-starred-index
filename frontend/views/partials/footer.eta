@@ -1,0 +1,10 @@
+<footer class="footer">
+	<div class="content has-text-centered">
+		<p>
+			Made with <i class="fas fa-heart has-text-danger mx-1"></i> by <a href="https://github.com/axelrindle">Axel Rindle</a>
+		</p>
+		<p>
+			Illustrations by <a href="https://undraw.co/license">unDraw</a>
+		</p>
+	</div>
+</footer>
