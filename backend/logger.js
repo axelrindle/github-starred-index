@@ -35,8 +35,8 @@ class Logger {
 				stream.write(meta);
 				break;
 			}
+			stream.write('\n');
 		}
-		stream.write('\n');
 	}
 
 	debug(message, meta = null) {
