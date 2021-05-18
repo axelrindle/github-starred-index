@@ -6,9 +6,9 @@ const { Logger } = require('../logger');
  *
  * @param {any} err
  */
-module.exports = (err) => {
+module.exports = (message, err) => {
 	const myLogger = new Logger('main');
-	myLogger.error(err?.message ?? 'An error occured!');
+	myLogger.error(message, err);
 	console.error(err);
 	process.exit(-1);
 };

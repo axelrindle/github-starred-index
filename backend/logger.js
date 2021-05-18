@@ -1,16 +1,32 @@
 // Require modules
+const util = require('util');
 const chalk = require('chalk');
 const dayjs = require('dayjs');
+const PrettyError = require('pretty-error');
 const isDebug = require('./util/isDebug');
 
 class Logger {
 	constructor (tag) {
 		this._tag = tag;
+		this._prettyError = new PrettyError();
 
 		const locale = process.env.APP_LOCALE;
 		require('dayjs/locale/' + locale);
 		dayjs.locale(locale);
 		dayjs.extend(require('dayjs/plugin/localizedFormat'));
+	}
+
+	_prettifyMeta(meta) {
+		if (meta instanceof Error) {
+			return this._prettyError.render(meta);
+		}
+		else {
+			return util.inspect(meta, {
+				depth: null,
+				showHidden: false,
+				colors: true
+			});
+		}
 	}
 
 	/**
@@ -27,14 +43,7 @@ class Logger {
 		stream.write(format);
 		stream.write('\n');
 		if (meta) {
-			switch (typeof meta) {
-			case 'object':
-				stream.write(JSON.stringify(meta, null, '\t'));
-				break;
-			default:
-				stream.write(meta);
-				break;
-			}
+			stream.write(this._prettifyMeta(meta));
 			stream.write('\n');
 		}
 	}
