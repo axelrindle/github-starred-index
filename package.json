@@ -20,6 +20,7 @@
 		"agenda": "^4.1.2",
 		"agendash": "^2.1.1",
 		"awilix": "^4.3.3",
+		"awilix-express": "^4.0.0",
 		"body-parser": "^1.19.0",
 		"chalk": "^4.1.0",
 		"compression": "^1.7.4",

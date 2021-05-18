@@ -1,9 +1,9 @@
 // Require modules
-const fs = require('fs').promises;
 const path = require('path');
 const { URL } = require('url');
 const express = require('express');
 const agendash = require('agendash');
+const { loadControllers, scopePerRequest } = require('awilix-express');
 const bodyParser = require('body-parser');
 const MongoStore = require('connect-mongo');
 const cookieParser = require('cookie-parser');
@@ -23,12 +23,6 @@ const createServer = require('./util/createServer');
 module.exports = async (container) => {
 	/** @type {import('./logger').Logger} */
 	const myLogger = container.resolve('createLogger')('server');
-
-	/** @type {import('./service/mongo')} */
-	const mongo = container.resolve('mongo');
-
-	/** @type {(file: string, variables: object?) => Promise<import('@octokit/graphql/dist-types/types').GraphQlResponse<any>>} */
-	const graphql = container.resolve('graphql');
 
 	eta.configure({
 		cache: !isDebug()
@@ -77,21 +71,9 @@ module.exports = async (container) => {
 		next();
 	});
 
-	// Load routes
-	const routerDir = path.join(__dirname, 'routes');
-	const routers = await fs.readdir(routerDir);
-	for (const router of routers) {
-		await require(path.join(routerDir, router))(app);
-	}
-
-	app.get('/', async (_req, res) => {
-		const { viewer } = await graphql('user');
-		res.render('index', {
-			user: viewer
-		});
-	});
-
 	app.use('/agendash', agendash(container.resolve('scheduler').getAgenda()));
+	app.use(scopePerRequest(container));
+	app.use(loadControllers('routes/*.js', { cwd: __dirname }));
 
 	const host = process.env.APP_HOST;
 	const port = parseInt(process.env.APP_PORT);
