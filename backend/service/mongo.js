@@ -28,11 +28,8 @@ class Mongo {
 	}
 
 	async _connect() {
+		this._logger.info('Connecting...');
 		await mongoose.connect(process.env.MONGO_URI, {
-			auth: {
-				user: process.env.MONGO_USER,
-				password: process.env.MONGO_PASS,
-			},
 			authSource: 'admin',
 			autoIndex: isDebug(),
 			useCreateIndex: true, // https://mongoosejs.com/docs/deprecations.html#ensureindex
