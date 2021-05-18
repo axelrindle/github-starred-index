@@ -51,7 +51,10 @@ module.exports = async (container) => {
 			secure: process.env.APP_URL.startsWith('https')
 		},
 		store: MongoStore.create({
-			client: mongo.getClient()
+			mongoUrl: process.env.MONGO_URI,
+			crypto: {
+				secret: process.env.APP_KEY
+			}
 		})
 	}));
 	if (process.env.HTTP_LOGGING_ENABLED === 'true') {
