@@ -50,6 +50,12 @@
 						<label for="tglScheme">Dark mode</label>
 					</div>
 				</div> */ %>
+				<a class="navbar-item" href="https://github.com/<%= it.user.login %>?tab=stars">
+					<span class="icon">
+						<i class="fab fa-github"></i>
+					</span>
+					<span>View on GitHub</span>
+                </a>
                 <div class="navbar-item">
                     <p>
 						Welcome,
