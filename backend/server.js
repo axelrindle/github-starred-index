@@ -24,6 +24,9 @@ module.exports = async (container) => {
 	/** @type {import('./logger').Logger} */
 	const myLogger = container.resolve('createLogger')('server');
 
+	/** @type {(file: string, variables: object?) => Promise<import('@octokit/graphql/dist-types/types').GraphQlResponse<any>>} */
+	const graphql = container.resolve('graphql');
+
 	eta.configure({
 		cache: !isDebug()
 	});
@@ -64,12 +67,14 @@ module.exports = async (container) => {
 	app.use(express.static('frontend/static'));
 	app.use('/dayjs', express.static('node_modules/dayjs/'));
 
-	app.use((req, res, next) => {
+	app.use(async (req, res, next) => {
+		const { viewer } = await graphql('user');
 		res.locals = {
 			url: (_path = '') => {
 				return new URL(_path, process.env.APP_URL).toString();
 			},
-			locale: process.env.APP_LOCALE
+			locale: process.env.APP_LOCALE,
+			user: viewer
 		};
 		next();
 	});
