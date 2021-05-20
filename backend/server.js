@@ -24,7 +24,7 @@ module.exports = async (container) => {
 	/** @type {import('./logger').Logger} */
 	const myLogger = container.resolve('createLogger')('server');
 
-	/** @type {(file: string, variables: object?) => Promise<import('@octokit/graphql/dist-types/types').GraphQlResponse<any>>} */
+	/** @type {import('./service/graphql').GraphQLHandler} */
 	const graphql = container.resolve('graphql');
 
 	eta.configure({

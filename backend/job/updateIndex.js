@@ -51,7 +51,7 @@ async function upsertMany(model, docs) {
 /**
  * @param {object} param0
  * @param {(tag: string) => import('../logger').Logger} param0.createLogger
- * @param {(file: string, variables: object?) => import('@octokit/graphql/dist-types/types').GraphQlResponse<any>} param0.graphql
+ * @param {import('../service/graphql').GraphQLHandler} param0.graphql
  * @param {import('../service/mongo')} param0.mongo
  */
 module.exports = async ({ createLogger, graphql, mongo }) => {

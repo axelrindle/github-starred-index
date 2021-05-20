@@ -6,7 +6,7 @@ module.exports = class ApiController extends Controller {
 	constructor({ createLogger, graphql, mongo, scheduler }) {
 		super({ createLogger });
 
-		/** @type {(file: string, variables: object?) => Promise<import('@octokit/graphql/dist-types/types').GraphQlResponse<any>>} */
+		/** @type {import('../service/graphql').GraphQLHandler} */
 		this._graphql = graphql;
 
 		/** @type {import('../service/mongo')} */

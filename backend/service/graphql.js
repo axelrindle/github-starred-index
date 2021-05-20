@@ -18,6 +18,10 @@ const readFile = async (name) => {
 	return buffer.toString('utf8');
 };
 
+/**
+ * @typedef {(file: string, variables: object?) => Promise<import('@octokit/graphql/dist-types/types').GraphQlResponse<any>>} GraphQLHandler
+ */
+
 module.exports = () => {
 	/**
 	 * Executes a GraphQL query from the given file and returns the result.
