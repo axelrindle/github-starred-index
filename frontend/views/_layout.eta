@@ -22,8 +22,6 @@
     <body class="is-flex is-flex-direction-column">
         <%~ includeFile('_navbar', it) %>
 
-        <%~ includeFile('partials/loading-overlay', it) %>
-
 		<%~ it.body %>
 
         <%~ includeFile('partials/footer', it) %>

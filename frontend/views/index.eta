@@ -9,6 +9,8 @@
 
 <% layout('./_layout.eta') %>
 
+<%~ includeFile('partials/loading-overlay', it) %>
+
 <section class="section main" style="flex: 1 0 auto;" id="app">
 	<div class="container">
 		<h1 class="title">Starred Repositories</h1>
