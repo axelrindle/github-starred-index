@@ -14,7 +14,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Setup Node.js environment
-      uses: actions/setup-node@v2.1.5
+      uses: actions/setup-node@v2
       with:
         node-version: 14.x
     - name: Install dependencies
@@ -28,7 +28,7 @@ jobs:
 
     - name: Docker meta
       id: meta
-      uses: crazy-max/ghaction-docker-meta@v3.3.0
+      uses: crazy-max/ghaction-docker-meta@v3
       with:
         # list of Docker images to use as base name for tags
         images: |
