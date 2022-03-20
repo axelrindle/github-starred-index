@@ -2,6 +2,10 @@
 [![Docker Image Version (latest semver)](https://img.shields.io/docker/v/axelrindle/github-starred-index?logo=docker)](https://hub.docker.com/r/axelrindle/github-starred-index)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/a47268802b464d99bea82318d82ab83f)](https://www.codacy.com/gh/axelrindle/github-starred-index/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=axelrindle/github-starred-index&amp;utm_campaign=Badge_Grade)
 
+# Archived
+
+Github introduced [their own list feature](https://docs.github.com/en/get-started/exploring-projects-on-github/saving-repositories-with-stars#organizing-starred-repositories-with-lists) for organizing starred repositories, so this project is obsolete.
+
 # github-starred-index
 
 > :stars: A simple webservice that indexes your starred GitHub repositories.
